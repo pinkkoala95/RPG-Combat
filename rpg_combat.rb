@@ -5,5 +5,17 @@ class Character
         @health = health
         @status = status
     end
+
+    def deal_damage(character)
+        character.receive_damage()
+    end
+
+    def receive_damage()
+        if @health <= 100
+            @status = "Dead"
+        else
+            @health -= 100
+        end
+    end
 end
 

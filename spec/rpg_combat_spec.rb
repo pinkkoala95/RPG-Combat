@@ -62,10 +62,8 @@ describe Character do
         expect(Character4.heal()).to eq(1500)
     end
 
-    it 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
-        Character4.level = 6
-        Character4.health = 1400
-        expect(Character4.heal()).to eq(1500)
+    xit 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
+        
     end
 end
 

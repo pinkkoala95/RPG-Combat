@@ -36,14 +36,14 @@ describe Character do
     end
 
        it 'should not be able to heal from damage if dead' do
-        Character2.heal(Character2)
+        Character2.heal()
         expect(Character2.health).to eq(0)
     end
     
     it 'should be able to heal from damage if status is alive' do
         Character3 = Character.new()
         Character3.health = 900
-        Character3.heal(Character3)
+        Character3.heal()
         expect(Character3.health).to eq(1000)
     end
 
@@ -53,19 +53,19 @@ describe Character do
 
     it 'should have a only heal to 1000 if below level 6' do
         Character4 = Character.new()
-        expect(Character4.heal(Character4)).to eq(1000)
+        expect(Character4.heal()).to eq(1000)
     end
 
     it 'should be able to heal up to 1500 if level 6 or above' do
         Character4.level = 6
         Character4.health = 1400
-        expect(Character4.heal(Character4)).to eq(1500)
+        expect(Character4.heal()).to eq(1500)
     end
 
     it 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
         Character4.level = 6
         Character4.health = 1400
-        expect(Character4.heal(Character4)).to eq(1500)
+        expect(Character4.heal()).to eq(1500)
     end
 end
 

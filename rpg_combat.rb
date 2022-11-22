@@ -20,15 +20,15 @@ class Character
         end
     end
 
-    def heal(character)
-        if character.status == "Dead"
+    def heal()
+        if @status == "Dead"
             @health = 0
-        elsif character.level < 6 && character.health<1000
+        elsif @level < 6 && @health<1000
             @health +=100
-        elsif character.level >= 6 && character.health<1500
+        elsif @level >= 6 && @health<1500
             @health += 100
         else #health is full
-            @health = @health
+            @health
         end
     end
 end

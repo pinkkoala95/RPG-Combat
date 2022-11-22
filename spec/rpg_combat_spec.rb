@@ -29,10 +29,22 @@ describe Character do
         expect(Character2).to have_attributes(:status => "Dead")
     end
 
-    # it 'should be able to deduct damage from another character' do
-    #     expect(Character1.accept_damage()).to eq(100)
-    # end
+    it 'should be able to change status to dead' do
+        Character2.health = 100
+        Character1.deal_damage(Character2)
+        expect(Character2).to have_attributes(:health => 0)
+    end
 
+       it 'should not be able to heal from damage if dead' do
+        Character2.heal(Character2)
+        expect(Character2.health).to eq(0)
+    end
+    
+    Character3 = Character.new()
+    it 'should be able to heal from damage' do
+        Character3.heal(Character3)
+        expect(Character3.health).to eq(1000)
+    end
 end
 
 # describe 'Character' do

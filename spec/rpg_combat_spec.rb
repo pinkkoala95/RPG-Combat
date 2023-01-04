@@ -65,6 +65,10 @@ describe Character do
         expect(@Character1.heal()).to eq(1500)
     end
 
+    it 'should not be able to deal damage to itself' do
+        expect(@Character1.deal_damage(@Character1)).to eq(1000)
+    end
+
     xit 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
         
     end

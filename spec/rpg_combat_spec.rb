@@ -64,10 +64,14 @@ describe Character do
         @Character1.health = 1400
         expect(@Character1.heal()).to eq(1500)
     end
-
+# doing the method first then checking the character attributes are what we expect 
     it 'should not be able to deal damage to itself' do
         @Character1.deal_damage(@Character1)
-        expect(@Character1.health).to eq(1000)
+        expect(@Character1).to have_attributes(:health => 1000)
+    end
+# checking the output of the method is equal to what we expect
+    it 'should not be able to deal damage to itself' do
+        expect(@Character1.deal_damage(@Character1)).to eq(1000)
     end
 
     xit 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do

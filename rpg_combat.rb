@@ -10,8 +10,10 @@ class Character
     def deal_damage(character)
         if character == self
             @health = @health
-        elsif self.level == character.level-5
+        elsif self.level <= character.level-5
             character.receive_damage_from_lower_level()
+        elsif self.level >= character.level+5
+            character.receive_damage_from_higher_level()
         else
             character.receive_damage()
         end
@@ -32,6 +34,15 @@ class Character
             @status = "Dead"
         else
             @health -= 50
+        end
+    end
+
+    def receive_damage_from_higher_level()
+        if @health <= 150
+            @health = 0
+            @status = "Dead"
+        else
+            @health -= 150
         end
     end
 

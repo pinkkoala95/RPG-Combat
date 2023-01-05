@@ -31,6 +31,17 @@ describe Character do
         expect(@Character2).to have_attributes(:health => 900)
     end
 
+    # doing the method first then checking the character attributes are what we expect 
+    it 'should not be able to deal damage to itself' do
+        @Character1.deal_damage(@Character1)
+        expect(@Character1).to have_attributes(:health => 1000)
+    end
+
+    # checking the output of the method is equal to what we expect
+    it 'should not be able to deal damage to itself' do
+        expect(@Character1.deal_damage(@Character1)).to eq(1000)
+    end
+
     it 'should be able to change status to dead if health falls to 0' do
         @Character2.health = 100
         @Character1.deal_damage(@Character2)
@@ -55,7 +66,7 @@ describe Character do
         expect(@Character1.health).to eq(1000)
     end
 
-    it 'should have a only heal to 1000 if below level 6' do
+    it 'should only heal to 1000 if below level 6' do
         expect(@Character1.heal()).to eq(1000)
     end
 
@@ -64,18 +75,26 @@ describe Character do
         @Character1.health = 1400
         expect(@Character1.heal()).to eq(1500)
     end
-# doing the method first then checking the character attributes are what we expect 
-    it 'should not be able to deal damage to itself' do
-        @Character1.deal_damage(@Character1)
-        expect(@Character1).to have_attributes(:health => 1000)
-    end
-# checking the output of the method is equal to what we expect
-    it 'should not be able to deal damage to itself' do
-        expect(@Character1.deal_damage(@Character1)).to eq(1000)
+
+    it 'should not heal itself if health is at 1500 (cannot be 1600)' do
+        @Character1.health = 1500
+        @Character1.heal()
+        expect(@Character1).to have_attributes(:health => 1500)
     end
 
-    xit 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
-        
+
+    it 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
+        @Character1.level = 1
+        @Character2.level = 6
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 950)
+    end
+
+    it 'should reduce damage by 100 if target is 4 levels above the attacker' do
+        @Character1.level = 1
+        @Character2.level = 5
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 900)
     end
 end
 

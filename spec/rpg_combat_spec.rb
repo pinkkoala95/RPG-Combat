@@ -83,7 +83,7 @@ describe Character do
     end
 
 
-    it 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
+    it 'should reduce damage by 50% if target is 5 Levels above the attacker' do
         @Character1.level = 1
         @Character2.level = 6
         @Character1.deal_damage(@Character2)
@@ -96,6 +96,34 @@ describe Character do
         @Character1.deal_damage(@Character2)
         expect(@Character2).to have_attributes(:health => 900)
     end
+
+    it 'should reduce damage by 50% if target is 5 or more Levels above the attacker' do
+        @Character1.level = 1
+        @Character2.level = 7
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 950)
+    end
+
+    it 'should increase damage by 50% if target is 5 Levels below the attacker' do
+        @Character1.level = 6
+        @Character2.level = 1
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 850)
+    end
+
+    it 'should increase damage by 50% if target is 5 or more Levels below the attacker' do
+        @Character1.level = 7
+        @Character2.level = 1
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 850)
+    end
+    it 'should reduce damage by 100 if target is 4 levels below the attacker' do
+        @Character1.level = 5
+        @Character2.level = 1
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 900)
+    end
+
 end
 
 # describe 'Character' do

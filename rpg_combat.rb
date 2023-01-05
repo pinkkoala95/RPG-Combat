@@ -8,7 +8,11 @@ class Character
     end
 
     def deal_damage(character)
-        character.receive_damage()
+        if character == self
+            @health = @health
+        else
+            character.receive_damage()
+        end
     end
 
     def receive_damage()

@@ -124,6 +124,26 @@ describe Character do
         expect(@Character2).to have_attributes(:health => 900)
     end
 
+    it 'should initialise a character that has a faction attribute but no faction is allocated to it' do
+        expect(@Character1).to have_attributes(:faction => [])
+    end
+
+    it 'should join a character to a faction' do
+        @Character1.join_faction()
+        expect(@Character1).to have_attributes(:faction => ["faction1"])
+    end
+
+    it 'should leave a character to a faction' do
+        @Character1.faction = ["faction1"]
+        @Character1.leave_faction()
+        expect(@Character1).to have_attributes(:faction => [])
+    end
+
+    xit 'should be able to join a character to multiple factions' do
+        @Character1.join_faction("faction1", "faction2")
+        expect(@Character1).to have_attributes(:faction => ["faction1", "faction2"])
+    end
+
 end
 
 # describe 'Character' do

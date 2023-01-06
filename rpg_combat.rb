@@ -1,10 +1,11 @@
 class Character
-    attr_accessor :health,:status, :level
+    attr_accessor :health,:status, :level, :faction
 
-    def initialize(health: 1000, status: "Alive", level: 1)
+    def initialize(health: 1000, status: "Alive", level: 1, faction: [])
         @health = health
         @status = status
         @level = level
+        @faction = faction
     end
 
     def deal_damage(character)
@@ -57,8 +58,14 @@ class Character
             @health
         end
     end
-end
 
-#When dealing damage:
-# If the target is 5 or more Levels above the attacker, Damage is reduced by 50%
-# If the target is 5 or more Levels below the attacker, Damage is increased by 50%
+    def join_faction()
+        @faction.append("faction1")
+    end
+
+    def leave_faction()
+        @faction.delete("faction1")
+    end
+end
+#Characters may belong to one or more Factions.
+# A Character may Join or Leave one or more Factions.

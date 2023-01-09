@@ -9,7 +9,7 @@ class Character
     end
 
     def deal_damage(character)
-        if character == self
+        if character == self || self.allie_check(character) == "allies"
             @health = @health
         elsif self.level <= character.level-5
             character.receive_damage_from_lower_level()
@@ -59,13 +59,23 @@ class Character
         end
     end
 
-    def join_faction()
-        @faction.append("faction1")
+    def join_faction(*faction)
+        (@faction << faction).flatten!
     end
 
-    def leave_faction()
-        @faction.delete("faction1")
+    def leave_faction(*faction)
+        faction.each do |x|
+            @faction.delete x
+        end
+    end
+
+    def allie_check(character)
+        if character.faction == self.faction && character.faction != []
+            return "allies"
+        end
     end
 end
-#Characters may belong to one or more Factions.
-# A Character may Join or Leave one or more Factions.
+
+#Players belonging to the same Faction are considered Allies.
+#Allies cannot Deal Damage to one another.
+#Allies can Heal one another and non-allies cannot.

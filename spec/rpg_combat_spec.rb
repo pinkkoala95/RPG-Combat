@@ -129,20 +129,51 @@ describe Character do
     end
 
     it 'should join a character to a faction' do
-        @Character1.join_faction()
+        @Character1.join_faction("faction1")
         expect(@Character1).to have_attributes(:faction => ["faction1"])
     end
 
     it 'should leave a character to a faction' do
         @Character1.faction = ["faction1"]
-        @Character1.leave_faction()
+        @Character1.leave_faction("faction1")
         expect(@Character1).to have_attributes(:faction => [])
     end
 
-    xit 'should be able to join a character to multiple factions' do
+    it 'should be able to join a character to multiple factions' do
         @Character1.join_faction("faction1", "faction2")
         expect(@Character1).to have_attributes(:faction => ["faction1", "faction2"])
     end
+
+    it 'should be able to use the join method to join no factions and still have an empty array' do
+        @Character1.join_faction()
+        expect(@Character1).to have_attributes(:faction => [])
+    end
+
+    it 'should be able to leave a character from mutliple factions' do
+        @Character1.faction = ["faction1", "faction2", "faction3"]
+        @Character1.leave_faction("faction1","faction2", "faction3")
+        expect(@Character1).to have_attributes(:faction => [])
+    end
+
+    it 'should be able to leave a character from mutliple factions and stay in one faction' do
+        @Character1.faction = ["faction1", "faction2", "faction3"]
+        @Character1.leave_faction("faction2")
+        expect(@Character1).to have_attributes(:faction => ["faction1", "faction3"])
+    end
+
+    it 'should not be able to deal damage if characters are allies (same faction)'do
+        @Character1.faction = ["faction1"]
+        @Character2.faction = ["faction1"]
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 1000)
+    end
+
+    it 'should check if character belongs to the same faction as ourself' do
+        @Character1.faction = ["faction1"]
+        @Character2.faction = ["faction1"]
+        expect( @Character1.allie_check(@Character2)).to eq("allies")
+    end
+
 
 end
 

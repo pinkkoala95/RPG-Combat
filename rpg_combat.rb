@@ -59,6 +59,13 @@ class Character
         end
     end
 
+    def heal_another(character)
+        if allie_check(character) == "allies"
+            character.heal()
+        end
+    end
+
+
     def join_faction(*faction)
         (@faction << faction).flatten!
     end
@@ -70,12 +77,27 @@ class Character
     end
 
     def allie_check(character)
-        if character.faction == self.faction && character.faction != []
+        allie_count = 0
+        self.faction.each do |x|
+            check = character.faction.include?(x)
+            if check == true
+                allie_count +=1
+            else
+                allie_count
+            end
+        end
+    
+        if allie_count>0 && character.faction != []
             return "allies"
+        else
+            return "non-allies"
         end
     end
 end
 
-#Players belonging to the same Faction are considered Allies.
-#Allies cannot Deal Damage to one another.
-#Allies can Heal one another and non-allies cannot.
+# As well as Characters there are also Magical Objects
+# Magical Objects have Health
+# The maximum amount of Health is fixed at the time the object is created
+# When reduced to 0 Health, Magical Objects are Destroyed
+# Magical Objects cannot be Healed by Characters
+# Magical Objects do not belong to Factions; they are neutral

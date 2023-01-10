@@ -55,9 +55,9 @@ describe Character do
     end
 
     it 'should not be able to heal from damage if dead' do
-        @Character2.status = "Dead"
-        @Character2.heal()
-        expect(@Character2.health).to eq(0)
+        @Character1.status = "Dead"
+        @Character1.heal()
+        expect(@Character1.health).to eq(0)
     end
     
     it 'should be able to heal from damage if status is alive' do
@@ -172,6 +172,60 @@ describe Character do
         @Character1.faction = ["faction1"]
         @Character2.faction = ["faction1"]
         expect( @Character1.allie_check(@Character2)).to eq("allies")
+    end
+
+    it 'should check if character belongs to different faction to ourself' do
+        @Character1.faction = ["faction1"]
+        @Character2.faction = ["faction2"]
+        expect( @Character1.allie_check(@Character2)).to eq("non-allies")
+    end
+
+    it 'should check if character belongs to at least one of the same factions to ourself' do
+        @Character1.faction = ["faction1"]
+        @Character2.faction = ["faction1","faction2"]
+        expect( @Character1.allie_check(@Character2)).to eq("allies")
+    end
+
+    it 'should check if character belongs to at least one of the same factions to ourself' do
+        @Character1.faction = ["faction1","faction2"]
+        @Character2.faction = ["faction1"]
+        expect( @Character1.allie_check(@Character2)).to eq("allies")
+    end
+
+    it 'should check if character belongs to at least one of the same factions to ourself' do
+        @Character1.faction = ["faction1","faction2"]
+        @Character2.faction = ["faction3","faction4"]
+        expect( @Character1.allie_check(@Character2)).to eq("non-allies")
+    end
+
+    it 'should not be able to deal damage if characters are allies (same faction)'do
+        @Character1.faction = ["faction1","faction2"]
+        @Character2.faction = ["faction1"]
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 1000)
+    end
+
+    it 'should be able to deal damage if characters are non-allies'do
+        @Character1.faction = ["faction1","faction2"]
+        @Character2.faction = ["faction3","faction4"]
+        @Character1.deal_damage(@Character2)
+        expect(@Character2).to have_attributes(:health => 900)
+    end
+
+    it 'should be able to heal if is an allie' do
+        @Character1.health = 800
+        @Character1.faction = ["faction1"]
+        @Character2.faction = ["faction1"]
+        @Character2.heal_another(@Character1)
+        expect(@Character1).to have_attributes(:health => 900)
+    end
+
+    it 'should not be able to heal if is not an allie' do
+        @Character1.health = 800
+        @Character1.faction = ["faction1"]
+        @Character2.faction = ["faction2"]
+        @Character2.heal_another(@Character1)
+        expect(@Character1).to have_attributes(:health => 800)
     end
 
 

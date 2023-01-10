@@ -95,9 +95,16 @@ class Character
     end
 end
 
+class Magical_object
+    attr_accessor :health,:status
+
+    def initialize(health: 10, status: "Alive")
+        @health = health
+        @status = status
+    end
+end
+
 # As well as Characters there are also Magical Objects
-# Magical Objects have Health
-# The maximum amount of Health is fixed at the time the object is created
-# When reduced to 0 Health, Magical Objects are Destroyed
-# Magical Objects cannot be Healed by Characters
-# Magical Objects do not belong to Factions; they are neutral
+#   When reduced to 0 Health, Magical Objects are Destroyed
+#   Magical Objects cannot be Healed by Characters
+#   Magical Objects do not belong to Factions; they are neutral

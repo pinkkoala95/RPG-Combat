@@ -1,11 +1,12 @@
 class Character
-    attr_accessor :health,:status, :level, :faction
+    attr_accessor :health,:status, :level, :faction, :max_health
 
-    def initialize(health: 1000, status: "Alive", level: 1, faction: [])
+    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000)
         @health = health
         @status = status
         @level = level
         @faction = faction
+        @max_health = max_health
     end
 
     def deal_damage(character)
@@ -96,15 +97,39 @@ class Character
 end
 
 class Magical_object
-    attr_accessor :health,:status
+    attr_accessor :health,:status,:max_health
 
-    def initialize(health: 10, status: "Alive")
+    def initialize(health: 100, status: "alive", max_health: 100)
         @health = health
         @status = status
+        @max_health = max_health
+    end
+
+    def damage_object()
+        if @health == 0
+            @status = "destroyed"
+        else 
+            @status = "alive"
+        end
     end
 end
 
-# As well as Characters there are also Magical Objects
-#   When reduced to 0 Health, Magical Objects are Destroyed
-#   Magical Objects cannot be Healed by Characters
-#   Magical Objects do not belong to Factions; they are neutral
+class Healing_magical_object < Magical_object
+
+    def magical_giving_health(character)
+        potential_health = character.health + @health
+        if potential_health <= character.max_health
+            character.health = character.health + @health
+        else
+            character.max_health
+        end
+    end  
+end
+
+# Characters can gain health from a Healing Magical Object.
+#   Characters can gain any amount of health 
+#   from the Object, up to its maximum and theirs
+#   Healing Magical Objects cannot deal Damage
+
+#check adding max_health to character class is a good idea for 
+#dealing with magical_giving_health method

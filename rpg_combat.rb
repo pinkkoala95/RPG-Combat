@@ -118,18 +118,40 @@ class Healing_magical_object < Magical_object
 
     def magical_giving_health(character)
         potential_health = character.health + @health
+        residual_health = potential_health - character.max_health
         if potential_health <= character.max_health
             character.health = character.health + @health
+            @health = 0
+            @status = "destroyed"
         else
-            character.max_health
+            character.health = character.max_health
+            @health = residual_health
         end
     end  
+
+    def deal_damage(character)
+        character.health
+    end
+
 end
 
-# Characters can gain health from a Healing Magical Object.
-#   Characters can gain any amount of health 
-#   from the Object, up to its maximum and theirs
-#   Healing Magical Objects cannot deal Damage
+class Magical_weapon < Magical_object
+    attr_accessor :damage
 
-#check adding max_health to character class is a good idea for 
-#dealing with magical_giving_health method
+    def initialize(damage: 10)
+        @damage = damage
+    end
+
+    def deal_damage(character)
+        character.health = character.health - @damage
+        health_left = @health - 1
+        @health = health_left
+    end
+
+end
+
+# Characters can deal Damage by using a Magical Weapon.
+#   These Magical Objects deal a fixed amount of damage when they are used
+#   The amount of damage is fixed at the time the weapon is created
+#   Every time the weapon is used, the Health is reduced by 1
+#   Magical Weapons cannot give Health to a Character

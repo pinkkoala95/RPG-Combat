@@ -7,6 +7,7 @@ describe Magical_object do
         @Character2 = Character.new
         @Magical_object = Magical_object.new
         @Healing_magical_object = Healing_magical_object.new
+        @Magical_weapon = Magical_weapon.new
     end
 
     
@@ -49,4 +50,45 @@ describe Magical_object do
         @Healing_magical_object.magical_giving_health(@Character1)
         expect(@Character1).to have_attributes(:health => 1000)
     end
+
+    it 'should be able to help a character gain up to its max health but be capped at maxiumum health' do
+        @Healing_magical_object.health = 5
+        @Character1.health = 996
+        @Healing_magical_object.magical_giving_health(@Character1)
+        expect(@Character1).to have_attributes(:health => 1000)
+    end
+
+    it 'should adjust Healing Magical Objects health depending on health given to character' do
+        @Healing_magical_object.health = 5
+        @Character1.health = 996
+        @Healing_magical_object.magical_giving_health(@Character1)
+        expect(@Healing_magical_object).to have_attributes(:health => 1, :status => "alive")
+    end
+
+    it 'should adjust Healing Magical Objects status to detroyed' do
+        @Healing_magical_object.health = 5
+        @Character1.health = 995
+        @Healing_magical_object.magical_giving_health(@Character1)
+        expect(@Healing_magical_object).to have_attributes(:health => 0, :status => "destroyed")
+    end
+
+    it 'should not be able to deal damage as a healing_magical_object' do
+        @Healing_magical_object.deal_damage(@Character1)
+        expect(@Character1).to have_attributes(:health => 1000)
+    end
+
+    it 'should initialize a magical weapon with fixed amount of damage it can give' do
+        expect(@Magical_weapon).to have_attributes(:damage => 10)
+    end
+
+    it 'should be able to use damage on a Character' do
+        @Magical_weapon.deal_damage(@Character1)
+        expect(@Character1).to have_attributes(:health => 990)
+    end
+
+    it 'should reduce the health of the magical weapon by 1 everytime it deals damage' do
+        @Magical_weapon.deal_damage(@Character1)
+        expect(@Magical_weapon).to have_attributes(:health => 99)
+    end
+    
 end

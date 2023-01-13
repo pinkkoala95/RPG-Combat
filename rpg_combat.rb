@@ -1,12 +1,17 @@
 class Character
-    attr_accessor :health,:status, :level, :faction, :max_health
+    attr_accessor :health,:status, :level, :faction, :max_health, :damage_tally
 
-    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000)
+    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000, damage_tally: 0)
         @health = health
         @status = status
         @level = level
         @faction = faction
         @max_health = max_health
+        @damage_tally = damage_tally
+    end
+
+    def update_damage_tally()
+        @damage_tally += 50
     end
 
     def deal_damage(character)
@@ -138,20 +143,20 @@ end
 class Magical_weapon < Magical_object
     attr_accessor :damage
 
-    def initialize(damage: 10)
+    def initialize(damage: 50, health:100)
         @damage = damage
+        @health = health
     end
 
     def deal_damage(character)
         character.health = character.health - @damage
-        health_left = @health - 1
-        @health = health_left
+        @health = @health - 1
     end
+
 
 end
 
-# Characters can deal Damage by using a Magical Weapon.
-#   These Magical Objects deal a fixed amount of damage when they are used
-#   The amount of damage is fixed at the time the weapon is created
-#   Every time the weapon is used, the Health is reduced by 1
-#   Magical Weapons cannot give Health to a Character
+# Level 1 Characters that survive 1000 damage points gain a level, (this may be counted over several battles)
+#   a character cannot gain a level while receiving damage, it happens directly afterwards (if the player is still alive)
+#   Level 2 Characters need to survive an additional 2000 damage points to gain a level, 
+#   Level 3 Characters need to survive an additional 3000, and so on.

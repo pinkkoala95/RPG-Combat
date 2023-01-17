@@ -1,25 +1,25 @@
 require './rpg_combat.rb'
 
-
 describe Character do
     before (:each) do
         @Character1 = Character.new
         @Character2 = Character.new
     end
 
-    
-    it 'should have a class called Character' do
-        expect(@Character1).to be_a(Character)
-    end
-    it 'should return a starting health attribute of 1000' do
-        expect(@Character1).to have_attributes(:health => 1000)
-    end
-    it 'should return status attribute of Alive' do
-        expect(@Character1).to have_attributes(:status => 'Alive')
-    end
+    describe 'newly created character' do
+        subject(:newly_created_character) { Character.new }
 
-    it 'should have a level attributed to it' do
-        expect(@Character1).to have_attributes(:level => 1)
+        it 'has 1000 health' do
+            expect(newly_created_character).to have_attributes(:health => 1000)
+        end
+
+        it 'should return status attribute of Alive' do
+            expect(@Character1).to have_attributes(:status => 'Alive')
+        end
+
+        it 'should have a level attributed to it' do
+            expect(@Character1).to have_attributes(:level => 1)
+        end
     end
 
     it 'should be able to receive damage taking health from 1000 to 900' do

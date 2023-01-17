@@ -78,12 +78,12 @@ describe Magical_object do
     end
 
     it 'should initialize a magical weapon with fixed amount of damage it can give' do
-        expect(@Magical_weapon).to have_attributes(:damage => 10)
+        expect(@Magical_weapon).to have_attributes(:damage => 50)
     end
 
     it 'should be able to use damage on a Character' do
         @Magical_weapon.deal_damage(@Character1)
-        expect(@Character1).to have_attributes(:health => 990)
+        expect(@Character1).to have_attributes(:health => 950)
     end
 
     it 'should reduce the health of the magical weapon by 1 everytime it deals damage' do

@@ -31,7 +31,8 @@ describe Character do
         subject(:character_being_attacked) {Character.new }
 
         it 'receive damage' do
-            expect(newly_created_character.receive_damage()).to eq(900)
+            newly_created_character.receive_damage()
+            expect(newly_created_character).to have_attributes(:health => 900)
         end
 
         it 'deal damage' do

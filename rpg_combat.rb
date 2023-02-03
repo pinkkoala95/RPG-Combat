@@ -10,9 +10,26 @@ class Character
         @damage_tally = damage_tally
     end
 
-    def update_damage_tally()
-        @damage_tally += 50
+    def update_level(character)
+        if @damage_tally >= 1000 && @health != 0
+            @level += 1
+        elsif @damage_tally >= 2000 && @health != 0
+            @level += 1
+        end
     end
+
+    # if @level == 1 && @damage_tally >= 1000
+    #     @level +=1
+    # if @level == 2 && @damage_tally >= 3000
+    #     @level +=1
+    
+    #     current_threshold = 1000
+    # when level goes up
+    #     damage_threshold= 
+    # if (current_level + next_level)*1000 >= damage_tally 
+    #     @level+= 1
+    
+
 
     def deal_damage(character)
         if character == self || self.allie_check(character) == "allies"
@@ -32,6 +49,7 @@ class Character
             @status = "Dead"
         else
             @health -= 100
+            @damage_tally += 100
         end
     end
 
@@ -41,6 +59,7 @@ class Character
             @status = "Dead"
         else
             @health -= 50
+            @damage_tally += 50
         end
     end
 
@@ -50,6 +69,7 @@ class Character
             @status = "Dead"
         else
             @health -= 150
+            @damage_tally += 150
         end
     end
 

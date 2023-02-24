@@ -1,35 +1,22 @@
 class Character
     attr_accessor :health,:status, :level, :faction, :max_health, :damage_tally
 
-    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000, damage_tally: 0)
+    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000, damage_tally: 0, cumulative_previous_level_total:1)
         @health = health
         @status = status
         @level = level
         @faction = faction
         @max_health = max_health
         @damage_tally = damage_tally
+        @cumulative_previous_level_total = cumulative_previous_level_total
     end
 
     def update_level(character)
-        if @damage_tally >= 1000 && @health != 0
-            @level += 1
-        elsif @damage_tally >= 2000 && @health != 0
+        damaage_tally_needed_to_move_up_a_level = @cumulative_previous_level_total*1000
+        if @damage_tally >= damaage_tally_needed_to_move_up_a_level && @health != 0
             @level += 1
         end
     end
-
-    # if @level == 1 && @damage_tally >= 1000
-    #     @level +=1
-    # if @level == 2 && @damage_tally >= 3000
-    #     @level +=1
-    
-    #     current_threshold = 1000
-    # when level goes up
-    #     damage_threshold= 
-    # if (current_level + next_level)*1000 >= damage_tally 
-    #     @level+= 1
-    
-
 
     def deal_damage(character)
         if character == self || self.allie_check(character) == "allies"

@@ -1,6 +1,5 @@
 require './rpg_combat.rb'
 
-
 describe Magical_object do
     before (:each) do
         @Character1 = Character.new

@@ -31,7 +31,7 @@ describe "Changing_level" do
         expect(@Character1).to have_attributes(:level => 4)
     end
 
-    it 'should change from level 8 to level 9 when we hit 6000 damage points' do
+    it 'should change from level 8 to level 9 when we hit 36000 damage points' do
         @Character1.level = 8
         @Character1.damage_tally = 36000
         @Character1.update_level(@Character1)

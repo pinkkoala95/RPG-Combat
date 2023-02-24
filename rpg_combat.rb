@@ -12,9 +12,10 @@ class Character
     end
 
     def update_level(character)
-        damaage_tally_needed_to_move_up_a_level = @cumulative_previous_level_total*1000
-        if @damage_tally >= damaage_tally_needed_to_move_up_a_level && @health != 0
+        damage_tally_needed_to_move_up_a_level = @cumulative_previous_level_total * 1000
+        if @damage_tally >= damage_tally_needed_to_move_up_a_level && @health != 0
             @level += 1
+            @cumulative_previous_level_total += @level
         end
     end
 

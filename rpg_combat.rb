@@ -1,7 +1,7 @@
 class Character
-    attr_accessor :health,:status, :level, :faction, :max_health, :damage_tally
-
-    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000, damage_tally: 0, cumulative_previous_level_total:1)
+    attr_accessor :health,:status, :level, :faction, :max_health, :damage_tally, :cumulative_previous_level_total
+   
+    def initialize(health: 1000, status: "Alive", level: 1, faction: [], max_health: 1000, damage_tally: 0, cumulative_previous_level_total: 1)
         @health = health
         @status = status
         @level = level
@@ -90,6 +90,13 @@ class Character
         end
     end
 
+    def update_level_based_on_faction(character)
+        @level = 2
+    end
+
+    #TODO Understand how to identify distinct factions 
+
+
     def allie_check(character)
         allie_count = 0
         self.faction.each do |x|
@@ -164,7 +171,5 @@ class Magical_weapon < Magical_object
 
 end
 
-# Level 1 Characters that survive 1000 damage points gain a level, (this may be counted over several battles)
-#   a character cannot gain a level while receiving damage, it happens directly afterwards (if the player is still alive)
-#   Level 2 Characters need to survive an additional 2000 damage points to gain a level, 
-#   Level 3 Characters need to survive an additional 3000, and so on.
+# Level 1 Characters that have ever been part of 3 distinct factions gain a level
+# Level 2 Characters need to join an additional 3 distinct factions to gain a level, Level 3 Characters need to join an additional 3, and so on.

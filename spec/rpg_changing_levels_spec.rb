@@ -19,6 +19,7 @@ describe "Changing_level" do
 
     it 'should change from level 2 to level 3 when we hit 3000 damage points' do
         @Character1.level = 2
+        @Character1.cumulative_previous_level_total = 1
         @Character1.damage_tally = 3000
         @Character1.update_level(@Character1)
         expect(@Character1).to have_attributes(:level => 3)
@@ -26,6 +27,7 @@ describe "Changing_level" do
 
     it 'should change from level 3 to level 4 when we hit 6000 damage points' do
         @Character1.level = 3
+        @Character1.cumulative_previous_level_total = 3
         @Character1.damage_tally = 6000
         @Character1.update_level(@Character1)
         expect(@Character1).to have_attributes(:level => 4)
@@ -33,8 +35,15 @@ describe "Changing_level" do
 
     it 'should change from level 8 to level 9 when we hit 36000 damage points' do
         @Character1.level = 8
+        @Character1.cumulative_previous_level_total = 28
         @Character1.damage_tally = 36000
         @Character1.update_level(@Character1)
         expect(@Character1).to have_attributes(:level => 9)
+    end
+
+    it 'should change from level 3 to level 4 when been a member of faction1, faction2, faction3' do
+        @Character1.level = 1
+        @Character1.update_level_based_on_faction(@Character1)
+        expect(@Character1).to have_attributes(:level => 2)
     end
 end

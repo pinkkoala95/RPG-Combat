@@ -91,7 +91,9 @@ class Character
     end
 
     def update_level_based_on_faction(character)
-        @level = 2
+        if self.faction.uniq.count == 3 * @level
+            @level += 1
+        end
     end
 
     #TODO Understand how to identify distinct factions 

@@ -41,9 +41,25 @@ describe "Changing_level" do
         expect(@Character1).to have_attributes(:level => 9)
     end
 
-    it 'should change from level 3 to level 4 when been a member of faction1, faction2, faction3' do
+    it 'should change from level 1 to level 2 when been a member of faction1, faction2, faction3' do
         @Character1.level = 1
+        @Character1.faction = ["faction1", "faction2","faction3"]
         @Character1.update_level_based_on_faction(@Character1)
         expect(@Character1).to have_attributes(:level => 2)
     end
+
+    it 'should not change from level 1 to level 2 when been a member of 3 factions but they are not distinct' do
+        @Character1.level = 1
+        @Character1.faction = ["faction1", "faction1","faction3","faction3"]
+        @Character1.update_level_based_on_faction(@Character1)
+        expect(@Character1).to have_attributes(:level => 1)
+    end
+
+    it 'should change from level 3 to level 4 when been a member of 9 factions' do
+        @Character1.level = 3
+        @Character1.faction = ["faction1", "faction2","faction3", "faction4", "faction5", "faction6", "faction7", "faction8", "faction9"]
+        @Character1.update_level_based_on_faction(@Character1)
+        expect(@Character1).to have_attributes(:level => 4)
+    end
+    
 end
